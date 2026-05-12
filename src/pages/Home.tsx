@@ -13,9 +13,9 @@ import { useSEO } from '@/lib/seo';
 
 export default function Home() {
   useSEO({
-    title: 'Bali Private Catering Guide 2025 | Best Villa Catering & Private Chef Services in Bali',
+    title: 'Catering Bali Villa | Private Chefs, Villa Dinners & Suppliers Guide 2025',
     description:
-      'The complete 2025 guide to catering Bali villa stays. Private chefs, villa dinners, weddings and luxury fine dining across Canggu, Seminyak, Uluwatu and Ubud.',
+      'The complete guide to catering Bali villa stays. Private chefs, villa dinners, weddings and luxury fine dining across Canggu, Seminyak, Uluwatu and Ubud.',
     canonical: 'https://www.villa-catering-bali.online/',
   });
 

@@ -36,7 +36,7 @@ export default function Navigation() {
           onClick={() => setMenuOpen(false)}
           className="font-body text-[12px] font-semibold tracking-[0.08em] uppercase text-black shrink-0"
         >
-          BALI CATERING
+          VILLA CATERING BALI
         </Link>
 
         {/* Desktop */}

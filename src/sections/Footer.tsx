@@ -7,10 +7,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
           <div>
             <p className="font-body text-[12px] tracking-[0.08em] uppercase text-white mb-3">
-              BALI PRIVATE CATERING
+              VILLA CATERING BALI
             </p>
             <p className="font-body text-[13px] leading-[1.6] text-white/55 max-w-[280px]">
-              An independent guide to private chef and villa catering services in Bali. Information and recommendations only.
+              An independent guide to catering Bali villa stays — private chefs, villa dinners, suppliers and event planning across the island.
             </p>
           </div>
 
@@ -37,7 +37,7 @@ export default function Footer() {
 
         <div className="border-t border-white/10 pt-5">
           <p className="font-body text-[11px] leading-[1.5] text-white/35">
-            &copy; 2026 Bali Private Catering Guide. This site contains affiliate links. We may earn a commission when you book through our recommendations. All opinions are independent.
+            &copy; 2026 Villa Catering Bali &middot; villa-catering-bali.online. Independent guide to catering Bali villa stays. This site may contain affiliate links and may earn a commission on bookings made through our recommendations.
           </p>
         </div>
       </div>
