@@ -1,32 +1,15 @@
-import Navigation from '@/components/Navigation';
-import HeroSection from '@/sections/HeroSection';
-import TrustedVillasSection from '@/sections/TrustedVillasSection';
-import WhatWeDoSection from '@/sections/WhatWeDoSection';
-import EditorialSplitSection from '@/sections/EditorialSplitSection';
-import HowItWorksSection from '@/sections/HowItWorksSection';
-import MenuShowcaseSection from '@/sections/MenuShowcaseSection';
-import VillaAreasSection from '@/sections/VillaAreasSection';
-import TestimonialsSection from '@/sections/TestimonialsSection';
-import CTASection from '@/sections/CTASection';
-import Footer from '@/sections/Footer';
+import { Routes, Route } from 'react-router';
+import Home from '@/pages/Home';
+import HubPage from '@/pages/HubPage';
+import TopicPage from '@/pages/TopicPage';
 
 function App() {
   return (
-    <div className="relative">
-      <Navigation />
-      <main>
-        <HeroSection />
-        <TrustedVillasSection />
-        <WhatWeDoSection />
-        <EditorialSplitSection />
-        <HowItWorksSection />
-        <MenuShowcaseSection />
-        <VillaAreasSection />
-        <TestimonialsSection />
-        <CTASection />
-      </main>
-      <Footer />
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/:hubSlug" element={<HubPage />} />
+      <Route path="/:hubSlug/:topicSlug" element={<TopicPage />} />
+    </Routes>
   );
 }
 

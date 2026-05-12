@@ -1,3 +1,5 @@
+import { Link } from 'react-router';
+
 export default function Footer() {
   return (
     <footer className="bg-black py-12 md:py-16">
@@ -13,13 +15,12 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-body text-[11px] tracking-[0.08em] uppercase text-white/40 mb-3">GUIDE</p>
+            <p className="font-body text-[11px] tracking-[0.08em] uppercase text-white/40 mb-3">EXPLORE</p>
             <nav className="flex flex-col gap-2">
-              <a href="#catering" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Types of Catering</a>
-              <a href="#services" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">How It Works</a>
-              <a href="#suppliers" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Menu Options</a>
-              <a href="#villas" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Villa Areas</a>
-              <a href="#guide" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Why Villa Catering</a>
+              <Link to="/catering" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Catering</Link>
+              <Link to="/services" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Services</Link>
+              <Link to="/suppliers" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Suppliers</Link>
+              <Link to="/guide" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Guide</Link>
             </nav>
           </div>
 

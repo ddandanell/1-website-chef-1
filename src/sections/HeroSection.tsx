@@ -1,3 +1,5 @@
+import { Link } from 'react-router';
+
 export default function HeroSection() {
   return (
     <section id="hero" className="bg-white pt-[56px]">
@@ -15,12 +17,12 @@ export default function HeroSection() {
               Everything you need to know about hiring private chefs and catering services for villas in Bali. From birthday parties to corporate dinners, we cover the best options across Canggu, Seminyak, Uluwatu and Ubud.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a href="#catering" className="font-body text-[12px] tracking-[0.06em] uppercase bg-black text-white px-5 py-3 hover:bg-black/80 transition-colors">
+              <Link to="/catering" className="font-body text-[12px] tracking-[0.06em] uppercase bg-black text-white px-5 py-3 hover:bg-black/80 transition-colors">
                 Explore Catering
-              </a>
-              <a href="#guide" className="font-body text-[12px] tracking-[0.06em] uppercase border border-black/20 text-black px-5 py-3 hover:border-black transition-colors">
+              </Link>
+              <Link to="/guide" className="font-body text-[12px] tracking-[0.06em] uppercase border border-black/20 text-black px-5 py-3 hover:border-black transition-colors">
                 Read the Guide
-              </a>
+              </Link>
             </div>
           </div>
 

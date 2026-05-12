@@ -1,20 +1,39 @@
-import { useState } from 'react'
-import '../App.css'
+import Navigation from '@/components/Navigation';
+import HeroSection from '@/sections/HeroSection';
+import TrustedVillasSection from '@/sections/TrustedVillasSection';
+import WhatWeDoSection from '@/sections/WhatWeDoSection';
+import EditorialSplitSection from '@/sections/EditorialSplitSection';
+import HowItWorksSection from '@/sections/HowItWorksSection';
+import MenuShowcaseSection from '@/sections/MenuShowcaseSection';
+import VillaAreasSection from '@/sections/VillaAreasSection';
+import TestimonialsSection from '@/sections/TestimonialsSection';
+import CTASection from '@/sections/CTASection';
+import Footer from '@/sections/Footer';
+import { useSEO } from '@/lib/seo';
 
 export default function Home() {
-  const [count, setCount] = useState(0)
+  useSEO({
+    title: 'Bali Private Catering Guide 2025 | Best Villa Catering & Private Chef Services in Bali',
+    description:
+      'The complete 2025 guide to catering Bali villa stays. Private chefs, villa dinners, weddings and luxury fine dining across Canggu, Seminyak, Uluwatu and Ubud.',
+    canonical: 'https://1-website-chef-1.vercel.app/',
+  });
 
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-    </>
-  )
+    <div className="relative">
+      <Navigation />
+      <main>
+        <HeroSection />
+        <TrustedVillasSection />
+        <WhatWeDoSection />
+        <EditorialSplitSection />
+        <HowItWorksSection />
+        <MenuShowcaseSection />
+        <VillaAreasSection />
+        <TestimonialsSection />
+        <CTASection />
+      </main>
+      <Footer />
+    </div>
+  );
 }
