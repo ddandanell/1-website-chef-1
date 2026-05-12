@@ -9,9 +9,77 @@ export default function TopicPage() {
   const hub = hubSlug ? findHub(hubSlug) : undefined;
   const topic = hubSlug && topicSlug ? findTopic(hubSlug, topicSlug) : undefined;
 
+  const canonicalUrl =
+    hub && topic
+      ? `https://1-website-chef-1.vercel.app/${hub.slug}/${topic.slug}`
+      : undefined;
+
+  const jsonLd =
+    hub && topic
+      ? [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: topic.title,
+            description: topic.metaDescription,
+            mainEntityOfPage: canonicalUrl,
+            inLanguage: 'en',
+            keywords: topic.primaryKeyword,
+            articleSection: hub.title,
+            image: topic.image
+              ? `https://1-website-chef-1.vercel.app${topic.image}`
+              : undefined,
+            publisher: {
+              '@type': 'Organization',
+              name: 'Bali Private Catering Guide',
+              url: 'https://1-website-chef-1.vercel.app/',
+            },
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://1-website-chef-1.vercel.app/',
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: hub.navLabel,
+                item: `https://1-website-chef-1.vercel.app/${hub.slug}`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: topic.title,
+                item: canonicalUrl,
+              },
+            ],
+          },
+          ...(topic.faq && topic.faq.length > 0
+            ? [
+                {
+                  '@context': 'https://schema.org',
+                  '@type': 'FAQPage',
+                  mainEntity: topic.faq.map((f) => ({
+                    '@type': 'Question',
+                    name: f.q,
+                    acceptedAnswer: { '@type': 'Answer', text: f.a },
+                  })),
+                },
+              ]
+            : []),
+        ]
+      : undefined;
+
   useSEO({
     title: topic?.metaTitle ?? 'Not found',
     description: topic?.metaDescription ?? '',
+    canonical: canonicalUrl,
+    jsonLd,
   });
 
   if (!hub || !topic) {

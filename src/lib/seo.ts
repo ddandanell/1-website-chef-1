@@ -4,6 +4,7 @@ interface SeoOptions {
   title: string;
   description: string;
   canonical?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 function setMeta(name: string, content: string) {
@@ -36,7 +37,20 @@ function setCanonical(href: string) {
   el.setAttribute('href', href);
 }
 
-export function useSEO({ title, description, canonical }: SeoOptions) {
+const DYNAMIC_LD_ID = 'jsonld-route';
+
+function setJsonLd(payload: Record<string, unknown> | Record<string, unknown>[] | undefined) {
+  const existing = document.getElementById(DYNAMIC_LD_ID);
+  if (existing) existing.remove();
+  if (!payload) return;
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.id = DYNAMIC_LD_ID;
+  script.textContent = JSON.stringify(payload);
+  document.head.appendChild(script);
+}
+
+export function useSEO({ title, description, canonical, jsonLd }: SeoOptions) {
   useEffect(() => {
     document.title = title;
     setMeta('description', description);
@@ -46,6 +60,7 @@ export function useSEO({ title, description, canonical }: SeoOptions) {
     const url = canonical ?? `https://1-website-chef-1.vercel.app${window.location.pathname}`;
     setOg('og:url', url);
     setCanonical(url);
+    setJsonLd(jsonLd);
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
-  }, [title, description, canonical]);
+  }, [title, description, canonical, jsonLd]);
 }

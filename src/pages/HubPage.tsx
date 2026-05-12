@@ -8,9 +8,32 @@ export default function HubPage() {
   const { hubSlug } = useParams<{ hubSlug: string }>();
   const hub = hubSlug ? findHub(hubSlug) : undefined;
 
+  const canonicalUrl = hub
+    ? `https://1-website-chef-1.vercel.app/${hub.slug}`
+    : undefined;
+
+  const jsonLd = hub
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: hub.title,
+        description: hub.metaDescription,
+        url: canonicalUrl,
+        inLanguage: 'en',
+        hasPart: hub.topics.map((t) => ({
+          '@type': 'Article',
+          name: t.title,
+          url: `https://1-website-chef-1.vercel.app/${hub.slug}/${t.slug}`,
+          description: t.metaDescription,
+        })),
+      }
+    : undefined;
+
   useSEO({
     title: hub?.metaTitle ?? 'Not found',
     description: hub?.metaDescription ?? '',
+    canonical: canonicalUrl,
+    jsonLd,
   });
 
   if (!hub) {
