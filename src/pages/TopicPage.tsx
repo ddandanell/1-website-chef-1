@@ -11,7 +11,7 @@ export default function TopicPage() {
 
   const canonicalUrl =
     hub && topic
-      ? `https://1-website-chef-1.vercel.app/${hub.slug}/${topic.slug}`
+      ? `https://www.villa-catering-bali.online/${hub.slug}/${topic.slug}`
       : undefined;
 
   const jsonLd =
@@ -27,12 +27,12 @@ export default function TopicPage() {
             keywords: topic.primaryKeyword,
             articleSection: hub.title,
             image: topic.image
-              ? `https://1-website-chef-1.vercel.app${topic.image}`
+              ? `https://www.villa-catering-bali.online${topic.image}`
               : undefined,
             publisher: {
               '@type': 'Organization',
               name: 'Bali Private Catering Guide',
-              url: 'https://1-website-chef-1.vercel.app/',
+              url: 'https://www.villa-catering-bali.online/',
             },
           },
           {
@@ -43,13 +43,13 @@ export default function TopicPage() {
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: 'https://1-website-chef-1.vercel.app/',
+                item: 'https://www.villa-catering-bali.online/',
               },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: hub.navLabel,
-                item: `https://1-website-chef-1.vercel.app/${hub.slug}`,
+                item: `https://www.villa-catering-bali.online/${hub.slug}`,
               },
               {
                 '@type': 'ListItem',
@@ -186,20 +186,46 @@ export default function TopicPage() {
               <h3 className="font-display text-[26px] md:text-[34px] leading-[1.1] tracking-[-0.01em] text-black mb-8">
                 Keep reading
               </h3>
-              <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+              <div className="grid md:grid-cols-3 gap-8 md:gap-10">
                 {related.map((r) => (
-                  <Link
-                    key={r.slug}
-                    to={`/${hub.slug}/${r.slug}`}
-                    className="group block"
-                  >
-                    <h4 className="font-display text-[20px] md:text-[22px] leading-[1.2] text-black mb-2 group-hover:underline underline-offset-[5px] decoration-[1px]">
-                      {r.title}
+                  <article key={r.slug} className="group flex flex-col">
+                    <Link
+                      to={`/${hub.slug}/${r.slug}`}
+                      className="block overflow-hidden mb-4"
+                      aria-label={r.title}
+                    >
+                      {r.image ? (
+                        <img
+                          src={r.image}
+                          alt={`${r.title} — ${hub.title}`}
+                          width="600"
+                          height="375"
+                          loading="lazy"
+                          className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                          style={{ aspectRatio: '8/5' }}
+                        />
+                      ) : (
+                        <div className="w-full bg-white" style={{ aspectRatio: '8/5' }} />
+                      )}
+                    </Link>
+                    <h4 className="font-display text-[20px] md:text-[22px] leading-[1.2] text-black mb-2">
+                      <Link
+                        to={`/${hub.slug}/${r.slug}`}
+                        className="hover:underline underline-offset-[5px] decoration-[1px]"
+                      >
+                        {r.title}
+                      </Link>
                     </h4>
-                    <p className="font-body text-[14px] leading-[1.6] text-black/65 line-clamp-3">
+                    <p className="font-body text-[14px] leading-[1.6] text-black/65 line-clamp-3 mb-4">
                       {r.intro}
                     </p>
-                  </Link>
+                    <Link
+                      to={`/${hub.slug}/${r.slug}`}
+                      className="inline-flex items-center self-start font-body text-[11px] tracking-[0.08em] uppercase border border-black/30 px-4 py-2 hover:bg-black hover:text-white transition-colors"
+                    >
+                      Read more &rarr;
+                    </Link>
+                  </article>
                 ))}
               </div>
               <div className="mt-10">

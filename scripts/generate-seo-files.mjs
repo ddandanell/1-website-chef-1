@@ -11,7 +11,7 @@ const root = resolve(__dirname, '..');
 const publicDir = resolve(root, 'public');
 mkdirSync(publicDir, { recursive: true });
 
-const SITE_URL = process.env.SITE_URL ?? 'https://1-website-chef-1.vercel.app';
+const SITE_URL = process.env.SITE_URL ?? 'https://www.villa-catering-bali.online';
 
 // Dynamic import of the TS topics module via tsx-style? We can't import TS directly in node.
 // Mirror the hub/topic slug structure here so the file has no runtime TS dependency.

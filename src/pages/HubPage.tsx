@@ -9,7 +9,7 @@ export default function HubPage() {
   const hub = hubSlug ? findHub(hubSlug) : undefined;
 
   const canonicalUrl = hub
-    ? `https://1-website-chef-1.vercel.app/${hub.slug}`
+    ? `https://www.villa-catering-bali.online/${hub.slug}`
     : undefined;
 
   const jsonLd = hub
@@ -23,7 +23,7 @@ export default function HubPage() {
         hasPart: hub.topics.map((t) => ({
           '@type': 'Article',
           name: t.title,
-          url: `https://1-website-chef-1.vercel.app/${hub.slug}/${t.slug}`,
+          url: `https://www.villa-catering-bali.online/${hub.slug}/${t.slug}`,
           description: t.metaDescription,
         })),
       }
@@ -70,29 +70,55 @@ export default function HubPage() {
 
         {/* Topic grid */}
         <section className="max-w-[1200px] mx-auto page-padding py-12 md:py-20">
-          <div className="grid md:grid-cols-2 gap-x-12 gap-y-14">
+          <div className="grid md:grid-cols-2 gap-x-10 gap-y-16">
             {hub.topics.map((topic, idx) => (
-              <Link
-                key={topic.slug}
-                to={`/${hub.slug}/${topic.slug}`}
-                className="group block"
-              >
-                <div className="flex items-baseline gap-4 mb-3">
+              <article key={topic.slug} className="group flex flex-col">
+                <Link
+                  to={`/${hub.slug}/${topic.slug}`}
+                  className="block overflow-hidden mb-5"
+                  aria-label={topic.title}
+                >
+                  {topic.image ? (
+                    <img
+                      src={topic.image}
+                      alt={`${topic.title} — ${hub.title}`}
+                      width="800"
+                      height="500"
+                      loading="lazy"
+                      className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      style={{ aspectRatio: '8/5' }}
+                    />
+                  ) : (
+                    <div className="w-full bg-linen" style={{ aspectRatio: '8/5' }} />
+                  )}
+                </Link>
+                <div className="flex items-baseline gap-3 mb-3">
                   <span className="font-body text-[11px] tracking-[0.1em] uppercase text-black/40">
                     {String(idx + 1).padStart(2, '0')}
                   </span>
-                  <span className="h-px flex-1 bg-black/15 group-hover:bg-black/40 transition-colors" />
+                  <span className="font-body text-[11px] tracking-[0.1em] uppercase text-black/50">
+                    {hub.navLabel}
+                  </span>
                 </div>
-                <h2 className="font-display text-[28px] md:text-[34px] leading-[1.1] tracking-[-0.01em] text-black mb-3 group-hover:underline underline-offset-[6px] decoration-[1px]">
-                  {topic.title}
+                <h2 className="font-display text-[26px] md:text-[32px] leading-[1.1] tracking-[-0.01em] text-black mb-3">
+                  <Link
+                    to={`/${hub.slug}/${topic.slug}`}
+                    className="hover:underline underline-offset-[6px] decoration-[1px]"
+                  >
+                    {topic.title}
+                  </Link>
                 </h2>
-                <p className="font-body text-[15px] md:text-[16px] leading-[1.6] text-black/70 max-w-[540px]">
+                <p className="font-body text-[15px] md:text-[16px] leading-[1.6] text-black/70 mb-5 max-w-[540px]">
                   {topic.intro}
                 </p>
-                <span className="inline-block mt-4 font-body text-[11px] tracking-[0.1em] uppercase text-black/60 group-hover:text-black transition-colors">
-                  Read article &rarr;
-                </span>
-              </Link>
+                <Link
+                  to={`/${hub.slug}/${topic.slug}`}
+                  className="inline-flex items-center self-start font-body text-[12px] tracking-[0.08em] uppercase bg-black text-white px-5 py-3 hover:bg-black/85 transition-colors"
+                >
+                  Read more
+                  <span aria-hidden="true" className="ml-2 transition-transform group-hover:translate-x-0.5">&rarr;</span>
+                </Link>
+              </article>
             ))}
           </div>
         </section>

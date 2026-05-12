@@ -192,6 +192,7 @@ const servicesTopics: Topic[] = [
     metaTitle: 'Full-Service Catering Bali Villa Service | End-to-End Hosting',
     metaDescription: 'Full-service catering Bali villa service covers chef, waitstaff, bartender, styling and cleanup. One vendor, one invoice, zero stress for your villa stay.',
     primaryKeyword: 'catering Bali villa service',
+    image: '/img-menu-mediterranean.jpg',
     intro:
       'Full-service is the umbrella term for the version of catering Bali villa service where one operator handles everything from grocery sourcing through to dish-pit cleanup. For groups that want the dinner to "just happen", this is the route.',
     sections: [
@@ -229,6 +230,7 @@ const servicesTopics: Topic[] = [
     metaTitle: 'Bartender Catering Bali Villa Service | Cocktail Bars at Home',
     metaDescription: 'Bartender catering Bali villa service for events, dinners and parties. Bali mixologists build custom cocktail lists and run full bar service in your villa.',
     primaryKeyword: 'catering Bali villa service',
+    image: '/img-villa-seminyak.jpg',
     intro:
       'Standalone bartender hire is one of the most underrated parts of a catering Bali villa service stack. For dinners over eight guests, putting one trained bartender behind the bar transforms how the evening flows — and it costs less than most people expect.',
     sections: [
@@ -266,6 +268,7 @@ const servicesTopics: Topic[] = [
     metaTitle: 'Waitstaff Catering Bali Villa Service | Trained Servers for Events',
     metaDescription: 'Hire trained waitstaff as part of catering Bali villa service. Front-of-house servers, runners and event leads for villa dinners, weddings and parties.',
     primaryKeyword: 'catering Bali villa service',
+    image: '/img-villa-canggu.jpg',
     intro:
       'Waitstaff are the silent backbone of any catering Bali villa service. A great chef and a strong menu only land if the food gets to the table on time, plated correctly, and at the right temperature. That is the waitstaff job.',
     sections: [
@@ -303,6 +306,7 @@ const servicesTopics: Topic[] = [
     metaTitle: 'Event Planning Catering Bali Villa Service | Villa Coordinators',
     metaDescription: 'Event planning as part of catering Bali villa service. Coordinators who handle timeline, vendors, styling and on-day flow for villa dinners and celebrations.',
     primaryKeyword: 'catering Bali villa service',
+    image: '/img-hero-villa.jpg',
     intro:
       'Larger villa events — weddings, multi-day birthdays, retreat closings — need a coordinator on top of the catering team. Event planning catering Bali villa service is the discipline of running the whole evening, not just the food.',
     sections: [
@@ -343,6 +347,7 @@ const suppliersTopics: Topic[] = [
     metaTitle: 'Best Catering Bali Villa Suppliers | Vetted Vendors 2025',
     metaDescription: 'Top catering Bali villa suppliers across Canggu, Seminyak, Uluwatu and Ubud. Independent vendor list with strengths, pricing tiers and what they are best for.',
     primaryKeyword: 'catering Bali villa suppliers',
+    image: '/img-menu-asian.jpg',
     intro:
       'The catering Bali villa suppliers market has expanded fast. There are now over a hundred operators with active websites and bookable menus. Quality is uneven. This is the landscape, broken into tiers by how the experienced concierge market actually rates them.',
     sections: [
@@ -380,6 +385,7 @@ const suppliersTopics: Topic[] = [
     metaTitle: 'Local Produce Catering Bali Villa Suppliers | Farm-to-Villa',
     metaDescription: 'Local farms and produce networks feeding catering Bali villa suppliers. Bedugul, Plaga and Kintamani farms that power the island\'s top villa kitchens.',
     primaryKeyword: 'catering Bali villa suppliers',
+    image: '/img-menu-balinese.jpg',
     intro:
       'The food on your villa table starts upstream of the catering kitchen. The strongest catering Bali villa suppliers source from a tight network of island farms and direct-from-grower co-ops, mostly clustered in the cooler highlands of Bedugul, Plaga and Kintamani.',
     sections: [
@@ -417,6 +423,7 @@ const suppliersTopics: Topic[] = [
     metaTitle: 'Seafood Catering Bali Villa Suppliers | Fresh Daily Catch',
     metaDescription: 'Seafood catering Bali villa suppliers — fishing co-ops, dive boats and importers feeding villa menus across the island. Daily catch, sustainability and pricing.',
     primaryKeyword: 'catering Bali villa suppliers',
+    image: '/img-menu-western.jpg',
     intro:
       'Seafood is the highest-stakes ingredient in any villa menu. Sourcing for catering Bali villa suppliers is split between local fishing cooperatives, import channels for oysters and crustaceans, and a small set of dive-boat operators delivering on commission for the premium tier.',
     sections: [
@@ -454,6 +461,7 @@ const suppliersTopics: Topic[] = [
     metaTitle: 'Wine Catering Bali Villa Suppliers | Wine, Beer & Spirits',
     metaDescription: 'Wine and beverage catering Bali villa suppliers. Importers, sommeliers and bar programmes feeding the island\'s top villa events and dinners.',
     primaryKeyword: 'catering Bali villa suppliers',
+    image: '/img-villa-seminyak.jpg',
     intro:
       'Beverage is the second biggest spend on most villa events after food, and the layer where the most money gets wasted on the wrong choices. Catering Bali villa suppliers either run their own bar programme or partner with a small number of importers — knowing which is which matters.',
     sections: [
@@ -494,6 +502,7 @@ const guideTopics: Topic[] = [
     metaTitle: 'How to Book Catering Bali Villa Guide | Step-by-Step 2025',
     metaDescription: 'Step-by-step catering Bali villa guide to booking the right team. Timelines, deposits, contracts and questions to ask before you pay anything.',
     primaryKeyword: 'catering Bali villa guide',
+    image: '/img-villa-uluwatu.jpg',
     intro:
       'Booking catering well is mostly about timing and clarity. This catering Bali villa guide section walks through the steps from first enquiry through to final invoice, and the small details that separate a smooth booking from a stressful one.',
     sections: [
@@ -531,6 +540,7 @@ const guideTopics: Topic[] = [
     metaTitle: 'Menu Planning Catering Bali Villa Guide | Build the Perfect Menu',
     metaDescription: 'Catering Bali villa guide to menu planning. Course structure, dietary considerations, flavour balance and how to brief your chef for the best result.',
     primaryKeyword: 'catering Bali villa guide',
+    image: '/img-menu-asian.jpg',
     intro:
       'Most disappointing villa dinners come down to a weak menu brief, not a weak chef. This part of the catering Bali villa guide is about building a menu that fits the group, the setting and the moment — and bringing the chef into that brief early.',
     sections: [
@@ -568,6 +578,7 @@ const guideTopics: Topic[] = [
     metaTitle: 'Budget Catering Bali Villa Guide | Cost Breakdown 2025',
     metaDescription: 'Catering Bali villa guide to budgeting. Per-person ranges, hidden costs, what drives the price up and how to right-size the spend for your event.',
     primaryKeyword: 'catering Bali villa guide',
+    image: '/img-villa-ubud.jpg',
     intro:
       'Catering pricing on Bali looks opaque from the outside but is reasonably predictable once you know the levers. This catering Bali villa guide section breaks down where the money actually goes and how to right-size the spend for the event you want.',
     sections: [
@@ -605,6 +616,7 @@ const guideTopics: Topic[] = [
     metaTitle: 'Dietary Options Catering Bali Villa Guide | Vegan, Halal, Allergies',
     metaDescription: 'Catering Bali villa guide to dietary options. Vegetarian, vegan, halal, gluten-free, child-friendly and serious allergies handled across Bali villa caterers.',
     primaryKeyword: 'catering Bali villa guide',
+    image: '/img-menu-balinese.jpg',
     intro:
       'Most Bali catering operators are well drilled on dietary requirements — but only if you brief them properly. This catering Bali villa guide section is about how to communicate dietaries clearly and what to expect across the standard categories.',
     sections: [

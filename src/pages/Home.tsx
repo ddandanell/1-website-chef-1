@@ -16,7 +16,7 @@ export default function Home() {
     title: 'Bali Private Catering Guide 2025 | Best Villa Catering & Private Chef Services in Bali',
     description:
       'The complete 2025 guide to catering Bali villa stays. Private chefs, villa dinners, weddings and luxury fine dining across Canggu, Seminyak, Uluwatu and Ubud.',
-    canonical: 'https://1-website-chef-1.vercel.app/',
+    canonical: 'https://www.villa-catering-bali.online/',
   });
 
   return (

@@ -57,7 +57,7 @@ export function useSEO({ title, description, canonical, jsonLd }: SeoOptions) {
     setOg('og:title', title);
     setOg('og:description', description);
     setOg('og:type', 'article');
-    const url = canonical ?? `https://1-website-chef-1.vercel.app${window.location.pathname}`;
+    const url = canonical ?? `https://www.villa-catering-bali.online${window.location.pathname}`;
     setOg('og:url', url);
     setCanonical(url);
     setJsonLd(jsonLd);

@@ -30,7 +30,7 @@ export default function Footer() {
               Have a Bali catering service you would like us to review? Or questions about villa catering? Get in touch.
             </p>
             <p className="font-body text-[13px] text-white/60">
-              hello@baliprivatecatering.com
+              hello@villa-catering-bali.online
             </p>
           </div>
         </div>

@@ -11,4 +11,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://1-website-chef-1.vercel.app/sitemap.xml
+Sitemap: https://www.villa-catering-bali.online/sitemap.xml
