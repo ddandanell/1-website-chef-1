@@ -1,8 +1,10 @@
 import { Link, useParams } from 'react-router';
 import Navigation from '@/components/Navigation';
 import Footer from '@/sections/Footer';
+import EditorPick from '@/components/EditorPick';
 import { findHub } from '@/content/topics';
 import { useSEO } from '@/lib/seo';
+import { MYCHEF_URL, hubRecommendations } from '@/content/recommendations';
 
 export default function HubPage() {
   const { hubSlug } = useParams<{ hubSlug: string }>();
@@ -121,6 +123,19 @@ export default function HubPage() {
               </article>
             ))}
           </div>
+
+          {/* Editorial recommendation */}
+          {hubRecommendations[hub.slug] && (
+            <div className="mt-12 md:mt-16 max-w-[820px] mx-auto">
+              <EditorPick
+                headline={hubRecommendations[hub.slug].headline}
+                body={hubRecommendations[hub.slug].body}
+                href={MYCHEF_URL}
+                cta={hubRecommendations[hub.slug].cta}
+                variant="bordered"
+              />
+            </div>
+          )}
         </section>
 
         {/* CTA strip */}
@@ -132,15 +147,18 @@ export default function HubPage() {
                   Planning a villa event
                 </p>
                 <h3 className="font-display text-[28px] md:text-[36px] leading-[1.1] tracking-[-0.01em] text-black">
-                  Tell us what you have in mind and we'll match you with the right team.
+                  Tell us what you have in mind, browse vetted teams on mychef.id.
                 </h3>
               </div>
-              <Link
-                to="/"
-                className="font-body text-[12px] tracking-[0.06em] uppercase bg-black text-white px-5 py-3 hover:bg-black/80 transition-colors self-start md:self-auto"
+              <a
+                href={MYCHEF_URL}
+                target="_blank"
+                rel="noopener external"
+                className="font-body text-[12px] tracking-[0.06em] uppercase bg-black text-white px-5 py-3 hover:bg-black/80 transition-colors self-start md:self-auto inline-flex items-center"
               >
-                Start an enquiry
-              </Link>
+                Browse on mychef.id
+                <span aria-hidden="true" className="ml-2">&rarr;</span>
+              </a>
             </div>
           </div>
         </section>

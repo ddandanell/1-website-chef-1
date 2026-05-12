@@ -1,8 +1,10 @@
 import { Link, useParams } from 'react-router';
 import Navigation from '@/components/Navigation';
 import Footer from '@/sections/Footer';
+import EditorPick from '@/components/EditorPick';
 import { findHub, findTopic } from '@/content/topics';
 import { useSEO } from '@/lib/seo';
+import { MYCHEF_URL, topicRecommendations } from '@/content/recommendations';
 
 export default function TopicPage() {
   const { hubSlug, topicSlug } = useParams<{ hubSlug: string; topicSlug: string }>();
@@ -139,20 +141,31 @@ export default function TopicPage() {
 
         {/* Article body */}
         <article className="max-w-[760px] mx-auto page-padding pb-14">
-          {topic.sections.map((section) => (
-            <section key={section.heading} className="mb-12">
-              <h2 className="font-display text-[26px] md:text-[32px] leading-[1.15] tracking-[-0.01em] text-black mb-5">
-                {section.heading}
-              </h2>
-              {section.paragraphs.map((p, i) => (
-                <p
-                  key={i}
-                  className="font-body text-[17px] leading-[1.75] text-black/80 mb-5"
-                >
-                  {p}
-                </p>
-              ))}
-            </section>
+          {topic.sections.map((section, sectionIdx) => (
+            <div key={section.heading}>
+              <section className="mb-12">
+                <h2 className="font-display text-[26px] md:text-[32px] leading-[1.15] tracking-[-0.01em] text-black mb-5">
+                  {section.heading}
+                </h2>
+                {section.paragraphs.map((p, i) => (
+                  <p
+                    key={i}
+                    className="font-body text-[17px] leading-[1.75] text-black/80 mb-5"
+                  >
+                    {p}
+                  </p>
+                ))}
+              </section>
+              {/* Editorial pick — placed after section 2 if available */}
+              {sectionIdx === 1 && topicRecommendations[topic.slug] && (
+                <EditorPick
+                  headline={topicRecommendations[topic.slug].headline}
+                  body={topicRecommendations[topic.slug].body}
+                  href={MYCHEF_URL}
+                  cta={topicRecommendations[topic.slug].cta}
+                />
+              )}
+            </div>
           ))}
 
           {topic.faq && topic.faq.length > 0 && (

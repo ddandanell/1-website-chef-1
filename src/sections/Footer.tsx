@@ -25,9 +25,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="font-body text-[11px] tracking-[0.08em] uppercase text-white/40 mb-3">ABOUT</p>
+            <p className="font-body text-[11px] tracking-[0.08em] uppercase text-white/40 mb-3">EDITOR'S PICK</p>
             <p className="font-body text-[13px] leading-[1.6] text-white/55 mb-3">
-              Have a Bali catering service you would like us to review? Or questions about villa catering? Get in touch.
+              For booking the actual chef, we keep pointing readers to <a href="https://mychef.id/" target="_blank" rel="noopener external" className="text-white/85 underline underline-offset-2 hover:text-white">mychef.id</a> — vetted operators, transparent pricing, single checkout.
             </p>
             <p className="font-body text-[13px] text-white/60">
               hello@villa-catering-bali.online

@@ -9,6 +9,11 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { hubs, type Hub, type Topic } from '../src/content/topics';
 import { homeFaqCategories } from '../src/content/homeFaq';
+import {
+  MYCHEF_URL,
+  topicRecommendations,
+  hubRecommendations,
+} from '../src/content/recommendations';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
@@ -145,7 +150,19 @@ function renderHomeBody(): string {
   `;
 }
 
+function renderEditorPick(headline: string, body: string, cta: string): string {
+  return `
+    <aside aria-label="Editor's pick">
+      <p>EDITOR'S PICK</p>
+      <p><strong>${escapeHtml(headline)}</strong></p>
+      <p>${escapeHtml(body)}</p>
+      <p><a href="${MYCHEF_URL}" rel="noopener external">${escapeHtml(cta)} →</a></p>
+    </aside>
+  `;
+}
+
 function renderHubBody(hub: Hub): string {
+  const rec = hubRecommendations[hub.slug];
   return `
     <nav aria-label="breadcrumb">
       <a href="/">Home</a> / <span>${escapeHtml(hub.navLabel)}</span>
@@ -169,6 +186,7 @@ function renderHubBody(hub: Hub): string {
         )
         .join('\n      ')}
     </section>
+    ${rec ? renderEditorPick(rec.headline, rec.body, rec.cta) : ''}
   `;
 }
 
@@ -177,13 +195,15 @@ function renderTopicBody(hub: Hub, topic: Topic): string {
     ? `<figure><img src="${escapeHtml(topic.image)}" alt="${escapeHtml(topic.title)} — ${escapeHtml(hub.title)}" width="1100" height="618" /></figure>`
     : '';
 
+  const rec = topicRecommendations[topic.slug];
   const sections = topic.sections
     .map(
-      (s) => `
+      (s, idx) => `
         <section>
           <h2>${escapeHtml(s.heading)}</h2>
           ${s.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('\n          ')}
         </section>
+        ${idx === 1 && rec ? renderEditorPick(rec.headline, rec.body, rec.cta) : ''}
       `
     )
     .join('\n      ');

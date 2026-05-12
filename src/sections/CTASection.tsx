@@ -35,6 +35,9 @@ export default function CTASection() {
             <p>
               If your villa is managed by a professional company, ask them for recommendations first. Villa managers work with catering teams regularly and can direct you to reliable, vetted options. This is especially helpful for first-time Bali visitors who are not yet familiar with the local service landscape.
             </p>
+            <p>
+              For most travellers, the cleanest starting point is <a href="https://mychef.id/" target="_blank" rel="noopener external" className="text-black underline underline-offset-4 hover:no-underline">mychef.id</a> — it aggregates vetted private chefs across Bali with transparent per-person pricing, real-time availability and a single secure checkout. It is what we keep recommending to readers who want to skip the comparison-shopping email loop.
+            </p>
           </div>
         </div>
       </div>
