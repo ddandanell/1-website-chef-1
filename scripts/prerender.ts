@@ -14,6 +14,7 @@ import {
   topicRecommendations,
   hubRecommendations,
 } from '../src/content/recommendations';
+import { areas, type Area } from '../src/content/areas';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
@@ -372,4 +373,172 @@ for (const hub of hubs) {
   }
 }
 
-console.log('prerender: 21 pages written with full body content');
+// About page
+{
+  const title = 'About Villa Catering Bali | Editorial Guide by myCHEF Indonesia';
+  const description =
+    "Villa Catering Bali is an editorial guide published by myCHEF Indonesia — Bali's longest-running private chef service since 2012. Who we are, how we research, and why we recommend what we do.";
+  const canonical = `${SITE_URL}/about`;
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'AboutPage',
+      name: 'About Villa Catering Bali',
+      url: canonical,
+      publisher: {
+        '@type': 'Organization',
+        name: 'myCHEF Indonesia',
+        url: 'https://mychef.id/',
+        foundingDate: '2012',
+        areaServed: 'Bali, Indonesia',
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'LocalBusiness',
+      name: 'myCHEF Indonesia',
+      url: 'https://mychef.id/',
+      priceRange: 'IDR 350,000 — 6,000,000 per person',
+      areaServed: ['Canggu', 'Seminyak', 'Uluwatu', 'Ubud', 'Sanur', 'Nusa Dua', 'Jimbaran'],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Denpasar',
+        addressRegion: 'Bali',
+        addressCountry: 'ID',
+      },
+      sameAs: ['https://mychef.id/'],
+    },
+  ];
+  const aboutBody = `
+    <header>
+      <p>ABOUT THIS GUIDE</p>
+      <h1>Why this guide exists, and who wrote it</h1>
+      <p>Villa Catering Bali is an editorial guide published by myCHEF Indonesia — Bali's longest-running private chef and villa catering operator since 2012. We built this site because the catering market on Bali has fragmented into hundreds of operators with wildly inconsistent quality, and travellers planning a villa dinner had no neutral, evidence-led resource to start with. This is that resource.</p>
+    </header>
+    <section>
+      <h2>Who runs it</h2>
+      <p>myCHEF Indonesia has been running private chef and villa catering on Bali for over a decade. We have plated more than 10,000 villa dinners across Canggu, Seminyak, Uluwatu, Ubud and the rest of the island.</p>
+      <p>Disclosure: when we recommend a booking platform, we recommend <a href="https://mychef.id/?utm_source=villa-catering-bali&utm_medium=referral&utm_campaign=guide&utm_content=about" rel="noopener external">mychef.id</a> — the platform we operate.</p>
+    </section>
+    <section>
+      <h2>How we research</h2>
+      <p>Pricing is sourced from active operator quotes collected across 2025. Supplier intelligence comes from our own purchasing relationships with farms in Bedugul, Plaga and Kintamani, and fishing cooperatives in Jimbaran, Kedonganan and Amed.</p>
+    </section>
+    <section>
+      <h2>Editorial policy</h2>
+      <p>We do not accept paid placements. We do not run sponsored content. When we recommend mychef.id we disclose that it is the platform we operate.</p>
+    </section>
+  `;
+  writePage(
+    resolve(distDir, 'about', 'index.html'),
+    buildPage({ title, description, canonical, jsonLd, bodyHtml: aboutBody })
+  );
+}
+
+// Area pages
+function renderAreaBody(area: Area): string {
+  const sections = area.sections
+    .map(
+      (s, idx) => `
+        <section>
+          <h2>${escapeHtml(s.heading)}</h2>
+          ${s.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('\n          ')}
+        </section>
+        ${
+          idx === 1
+            ? renderEditorPick(
+                `mychef.id is where ${area.name} villa caterers actually take bookings`,
+                `The forty-plus operators serving ${area.name} are scattered across personal WhatsApp lines and old websites. mychef.id consolidates the vetted ones onto a single platform with unified pricing and real-time availability.`,
+                `Browse ${area.name} chefs`
+              )
+            : ''
+        }
+      `
+    )
+    .join('\n      ');
+
+  const menus = area.recommendedMenus
+    .map(
+      (m) => `<div><h3>${escapeHtml(m.name)}</h3><p>${escapeHtml(m.description)}</p></div>`
+    )
+    .join('\n      ');
+
+  const faq = area.faq
+    .map((f) => `<div><p><strong>${escapeHtml(f.q)}</strong></p><p>${escapeHtml(f.a)}</p></div>`)
+    .join('\n      ');
+
+  return `
+    <nav aria-label="breadcrumb">
+      <a href="/">Home</a> / <span>Areas</span> / <span>${escapeHtml(area.name)}</span>
+    </nav>
+    <header>
+      <p>BALI VILLA AREAS — ${escapeHtml(area.name.toUpperCase())}</p>
+      <h1>${escapeHtml(area.title)}</h1>
+      <p>${escapeHtml(area.intro)}</p>
+      <p>Sub-areas covered: ${area.subAreas.map(escapeHtml).join(', ')}.</p>
+    </header>
+    <figure><img src="${escapeHtml(area.image)}" alt="${escapeHtml(area.title)}" width="1100" height="618" /></figure>
+    <aside>
+      <p><strong>Travel surcharge:</strong> ${escapeHtml(area.surcharge)}</p>
+    </aside>
+    ${sections}
+    <section>
+      <h2>Menu styles that work best in ${escapeHtml(area.name)}</h2>
+      ${menus}
+    </section>
+    <section>
+      <h2>Frequently asked about catering in ${escapeHtml(area.name)}</h2>
+      ${faq}
+    </section>
+  `;
+}
+
+for (const area of areas) {
+  const canonical = `${SITE_URL}/areas/${area.slug}`;
+  const aImage = `${SITE_URL}${area.image}`;
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: area.title,
+      description: area.metaDescription,
+      mainEntityOfPage: canonical,
+      inLanguage: 'en',
+      keywords: area.primaryKeyword,
+      articleSection: `Bali Catering Areas — ${area.name}`,
+      image: aImage,
+      publisher: { '@context': 'https://schema.org', ...ORG_LD },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Areas', item: `${SITE_URL}/areas` },
+        { '@type': 'ListItem', position: 3, name: area.name, item: canonical },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: area.faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+  ];
+  writePage(
+    resolve(distDir, 'areas', area.slug, 'index.html'),
+    buildPage({
+      title: area.metaTitle,
+      description: area.metaDescription,
+      canonical,
+      jsonLd,
+      ogImage: aImage,
+      bodyHtml: renderAreaBody(area),
+    })
+  );
+}
+
+console.log(`prerender: ${21 + 1 + areas.length} pages written with full body content`);

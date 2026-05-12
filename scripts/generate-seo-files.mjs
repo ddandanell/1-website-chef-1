@@ -58,14 +58,20 @@ const hubs = [
   },
 ];
 
+const areaSlugs = ['canggu-villa-catering'];
+
 const today = new Date().toISOString().slice(0, 10);
 const urls = [];
 urls.push({ loc: `${SITE_URL}/`, priority: '1.0', changefreq: 'weekly' });
+urls.push({ loc: `${SITE_URL}/about`, priority: '0.6', changefreq: 'monthly' });
 for (const hub of hubs) {
   urls.push({ loc: `${SITE_URL}/${hub.slug}`, priority: '0.8', changefreq: 'weekly' });
   for (const topic of hub.topics) {
     urls.push({ loc: `${SITE_URL}/${hub.slug}/${topic}`, priority: '0.7', changefreq: 'monthly' });
   }
+}
+for (const slug of areaSlugs) {
+  urls.push({ loc: `${SITE_URL}/areas/${slug}`, priority: '0.75', changefreq: 'monthly' });
 }
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

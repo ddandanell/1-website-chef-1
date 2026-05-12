@@ -8,7 +8,11 @@ export interface Recommendation {
   cta: string;
 }
 
-export const MYCHEF_URL = 'https://mychef.id/';
+// Re-export the UTM-tracked URL builder. Use mychefUrl('topic-slug') in
+// component code so we can attribute clicks back to the originating page.
+export { mychefUrl } from '../lib/links';
+export { whatsappUrl } from '../lib/links';
+export const MYCHEF_URL = 'https://mychef.id/?utm_source=villa-catering-bali&utm_medium=referral&utm_campaign=guide';
 
 export const topicRecommendations: Record<string, Recommendation> = {
   'private-chef-bali-villa': {
