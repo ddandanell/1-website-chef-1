@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+# Villa Catering Bali
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Marketing site for `villa-catering-bali.online`, built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Local commands
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run build
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## SEO automation loop
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This repository includes a GitHub Actions workflow at `.github/workflows/seo-optimization.yml` that runs every five days and can also be started manually with `workflow_dispatch`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The workflow does this:
+
+1. Pulls GA4 and Google Search Console reports
+2. Reviews the live site in a real browser with Playwright
+3. Generates an SEO upgrade plan and bounded file replacements with OpenAI
+4. Applies the changes to the allowed content/page files
+5. Builds the site and re-checks a local preview in the browser
+6. Opens a PR with the upgrade plan if the build succeeds
+
+### Required GitHub secrets
+
+- `SEO_GOOGLE_CLIENT_ID`
+- `SEO_GOOGLE_CLIENT_SECRET`
+- `SEO_GOOGLE_REFRESH_TOKEN`
+- `SEO_GA4_PROPERTY_ID`
+- `SEO_GSC_SITE_URL`
+- `SEO_OPENAI_API_KEY`
+
+### Optional GitHub variables
+
+- `SEO_SITE_URL` — defaults to `https://www.villa-catering-bali.online`
+- `SEO_OPENAI_MODEL` — defaults to `gpt-4.1-mini`
+- `SEO_AUTOMATION_AUTO_MERGE` — set to `true` if the bot-created PR should auto-merge after checks pass
+
+### Local helper commands
+
+```bash
+npm run seo:collect
+npm run seo:browser-review
+npm run seo:generate
+npm run seo:apply
 ```
+
+Artifacts are written to `.seo-automation/` during a run and are intentionally ignored by git.

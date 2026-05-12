@@ -1,0 +1,95 @@
+name: SEO optimization loop
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 4 */5 * *'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  seo-upgrade:
+    runs-on: ubuntu-latest
+    env:
+      SEO_SITE_URL: ${{ vars.SEO_SITE_URL || 'https://www.villa-catering-bali.online' }}
+      SEO_GOOGLE_CLIENT_ID: ${{ secrets.SEO_GOOGLE_CLIENT_ID }}
+      SEO_GOOGLE_CLIENT_SECRET: ${{ secrets.SEO_GOOGLE_CLIENT_SECRET }}
+      SEO_GOOGLE_REFRESH_TOKEN: ${{ secrets.SEO_GOOGLE_REFRESH_TOKEN }}
+      SEO_GA4_PROPERTY_ID: ${{ secrets.SEO_GA4_PROPERTY_ID }}
+      SEO_GSC_SITE_URL: ${{ secrets.SEO_GSC_SITE_URL }}
+      SEO_OPENAI_API_KEY: ${{ secrets.SEO_OPENAI_API_KEY }}
+      SEO_OPENAI_MODEL: ${{ vars.SEO_OPENAI_MODEL || 'gpt-4.1-mini' }}
+      SEO_AUTOMATION_AUTO_MERGE: ${{ vars.SEO_AUTOMATION_AUTO_MERGE || 'false' }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Collect GA4 and Search Console reports
+        run: node scripts/seo/collect-reports.mjs
+
+      - name: Review the live site in a browser
+        run: node scripts/seo/browser-review.mjs
+
+      - name: Generate upgrade plan and file replacements
+        run: node scripts/seo/generate-upgrade.mjs
+
+      - name: Apply approved replacements
+        run: node scripts/seo/apply-upgrade.mjs
+
+      - name: Build the site
+        run: npm run build
+
+      - name: Review local preview in a browser
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 &
+          PREVIEW_PID=$!
+          trap "kill $PREVIEW_PID" EXIT
+          sleep 5
+          SEO_SITE_URL=http://127.0.0.1:4173 node scripts/seo/browser-review.mjs
+
+      - name: Upload SEO artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-automation-${{ github.run_id }}
+          path: .seo-automation
+          if-no-files-found: error
+
+      - name: Create branch, commit, and PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet; then
+            echo "No code changes produced by this cycle."
+            exit 0
+          fi
+          BRANCH="seo-automation/$(date +%Y%m%d-%H%M%S)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add src/content src/pages package.json package-lock.json .gitignore .github/workflows/seo-optimization.yml scripts/seo README.md
+          git commit -m "feat(seo): automated five-day optimization cycle"
+          git push --set-upstream origin "$BRANCH"
+          PR_URL=$(gh pr create \
+            --title "SEO automation upgrade $(date +%Y-%m-%d)" \
+            --body-file .seo-automation/upgrade-plan.md \
+            --base main \
+            --head "$BRANCH")
+          if [ "$SEO_AUTOMATION_AUTO_MERGE" = "true" ]; then
+            gh pr merge --auto --squash "$PR_URL"
+          fi

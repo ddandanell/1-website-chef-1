@@ -15,6 +15,9 @@ dist-ssr
 # Vercel
 .vercel
 
+# SEO automation
+.seo-automation
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
