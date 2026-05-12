@@ -102,7 +102,7 @@ export default function TopicPage() {
   return (
     <div className="relative">
       <Navigation />
-      <main className="pt-[112px]">
+      <main className="pt-[120px]">
         {/* Breadcrumb */}
         <div className="max-w-[820px] mx-auto page-padding pt-6">
           <p className="font-body text-[11px] tracking-[0.1em] uppercase text-black/50">

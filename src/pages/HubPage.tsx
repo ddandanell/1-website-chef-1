@@ -54,7 +54,7 @@ export default function HubPage() {
   return (
     <div className="relative">
       <Navigation />
-      <main className="pt-[112px]">
+      <main className="pt-[120px]">
         {/* Header */}
         <header className="max-w-[1200px] mx-auto page-padding py-12 md:py-16 border-b border-black/10">
           <p className="font-body text-[11px] tracking-[0.1em] uppercase text-black/50 mb-4">

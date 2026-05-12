@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="bg-white pt-[56px]">
+    <section id="hero" className="bg-white pt-[64px]">
       <div className="max-w-[1200px] mx-auto page-padding py-12 md:py-16">
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
           {/* Text */}

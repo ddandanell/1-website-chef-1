@@ -8,6 +8,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { hubs, type Hub, type Topic } from '../src/content/topics';
+import { homeFaqCategories } from '../src/content/homeFaq';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
@@ -103,6 +104,22 @@ const ORG_LD = {
 // === Body content renderers (plain HTML, no React) ===
 
 function renderHomeBody(): string {
+  const faqHtml = homeFaqCategories
+    .map(
+      (cat) => `
+        <section>
+          <h3>${escapeHtml(cat.title)}</h3>
+          ${cat.items
+            .map(
+              (item) =>
+                `<div><p><strong>${escapeHtml(item.q)}</strong></p><p>${escapeHtml(item.a)}</p></div>`
+            )
+            .join('\n          ')}
+        </section>
+      `
+    )
+    .join('\n      ');
+
   return `
     <header>
       <p>BALI PRIVATE CATERING GUIDE — 2025</p>
@@ -120,6 +137,10 @@ function renderHomeBody(): string {
           )
           .join('\n        ')}
       </ul>
+    </section>
+    <section>
+      <h2>Frequently asked about catering Bali villa</h2>
+      ${faqHtml}
     </section>
   `;
 }
@@ -203,6 +224,17 @@ function renderTopicBody(hub: Hub, topic: Topic): string {
   const description =
     'The complete guide to catering Bali villa stays. Private chefs, villa dinners, weddings and luxury fine dining across Canggu, Seminyak, Uluwatu and Ubud.';
   const canonical = `${SITE_URL}/`;
+  const faqLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: homeFaqCategories.flatMap((cat) =>
+      cat.items.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      }))
+    ),
+  };
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -217,6 +249,7 @@ function renderTopicBody(hub: Hub, topic: Topic): string {
       '@context': 'https://schema.org',
       ...ORG_LD,
     },
+    faqLd,
   ];
   writePage(
     resolve(distDir, 'index.html'),

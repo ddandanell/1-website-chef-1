@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
+import Logo from './Logo';
 
 const navLinks = [
   { label: 'CATERING', to: '/catering' },
@@ -30,14 +31,8 @@ export default function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-black/10">
-      <div className="max-w-[1200px] mx-auto page-padding h-[56px] flex items-center justify-between">
-        <Link
-          to="/"
-          onClick={() => setMenuOpen(false)}
-          className="font-body text-[12px] font-semibold tracking-[0.08em] uppercase text-black shrink-0"
-        >
-          VILLA CATERING BALI
-        </Link>
+      <div className="max-w-[1200px] mx-auto page-padding h-[64px] flex items-center justify-between">
+        <Logo onClick={() => setMenuOpen(false)} />
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-6">
@@ -66,7 +61,7 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden fixed inset-0 top-[56px] bg-white z-40 p-6 flex flex-col gap-6">
+        <div className="md:hidden fixed inset-0 top-[64px] bg-white z-40 p-6 flex flex-col gap-6">
           {navLinks.map((link) => (
             <button
               key={link.to}
