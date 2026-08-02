@@ -152,6 +152,11 @@ function renderHomeBody(): string {
       <h2>Frequently asked about catering Bali villa</h2>
       ${faqHtml}
     </section>
+    <section>
+      <h2>When you are ready to book</h2>
+      <p>This guide is editorial research. For a vetted team with transparent rates, hire a <a href="https://mychef.id/private-chef-bali?utm_source=villa-catering-bali&amp;utm_medium=referral&amp;utm_campaign=guide&amp;utm_content=home">private chef in Bali on mychef.id</a>, compare <a href="https://mychef.id/pricing?utm_source=villa-catering-bali&amp;utm_medium=referral&amp;utm_campaign=guide&amp;utm_content=home-pricing">published pricing</a>, or review <a href="https://mychef.id/bali-wedding-catering-packages?utm_source=villa-catering-bali&amp;utm_medium=referral&amp;utm_campaign=guide&amp;utm_content=home-wedding">wedding catering packages</a>.</p>
+      <p>Also see our free <a href="/resources/bali-villa-catering-price-index-2026">2026 price index</a> and area guides for <a href="/areas/canggu-villa-catering">Canggu</a>, <a href="/areas/seminyak-villa-catering">Seminyak</a>, <a href="/areas/ubud-villa-catering">Ubud</a> and <a href="/areas/uluwatu-villa-catering">Uluwatu</a>.</p>
+    </section>
   `;
 }
 
