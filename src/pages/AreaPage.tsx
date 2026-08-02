@@ -4,7 +4,9 @@ import Footer from '@/sections/Footer';
 import EditorPick from '@/components/EditorPick';
 import { findArea } from '@/content/areas';
 import { useSEO } from '@/lib/seo';
-import { mychefUrl, whatsappUrl } from '@/lib/links';
+import { mychefUrl, whatsappUrl, MYCHEF_PATHS } from '@/lib/links';
+import { areaMychefPaths } from '@/content/recommendations';
+import { areas } from '@/content/areas';
 
 export default function AreaPage() {
   const { areaSlug } = useParams<{ areaSlug: string }>();
@@ -159,10 +161,13 @@ export default function AreaPage() {
               </section>
               {idx === 1 && (
                 <EditorPick
-                  headline={`mychef.id is where ${area.name} villa caterers actually take bookings`}
-                  body={`The forty-plus operators serving ${area.name} are scattered across personal WhatsApp lines and old websites. mychef.id consolidates the vetted ones onto a single platform with unified pricing and real-time availability. Worth a five-minute browse before you start emailing.`}
-                  href={mychefUrl(area.slug)}
-                  cta={`Browse ${area.name} chefs`}
+                  headline={`Private chef service in ${area.name} — transparent rates, local logistics`}
+                  body={`Operators serving ${area.name} are scattered across personal WhatsApp lines. For a vetted team with published pricing, same-day confirmation and ${area.name}-specific coverage notes, start on the mychef.id ${area.name} location page.`}
+                  href={mychefUrl(
+                    area.slug,
+                    areaMychefPaths[area.slug] ?? MYCHEF_PATHS.privateChef,
+                  )}
+                  cta={`Private chef ${area.name}`}
                 />
               )}
             </div>
@@ -206,10 +211,51 @@ export default function AreaPage() {
             </div>
           </section>
 
+          {/* Internal area mesh */}
+          <section className="mt-14 pt-10 border-t border-black/10">
+            <h2 className="font-display text-[22px] md:text-[26px] leading-[1.15] text-black mb-4">
+              Other Bali villa areas
+            </h2>
+            <ul className="flex flex-wrap gap-3 mb-8">
+              {areas
+                .filter((a) => a.slug !== area.slug)
+                .map((a) => (
+                  <li key={a.slug}>
+                    <Link
+                      to={`/areas/${a.slug}`}
+                      className="font-body text-[13px] tracking-[0.04em] uppercase border border-black/20 px-3 py-2 hover:bg-black hover:text-white transition-colors"
+                    >
+                      {a.name}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+            <ul className="space-y-2 mb-10">
+              <li>
+                <Link to="/catering/private-chef-bali-villa" className="underline underline-offset-4 text-[15px]">
+                  Private chef villa guide
+                </Link>
+              </li>
+              <li>
+                <Link to="/resources/bali-villa-catering-price-index-2026" className="underline underline-offset-4 text-[15px]">
+                  2026 price index
+                </Link>
+              </li>
+              <li>
+                <Link to="/resources/villa-kitchen-readiness-checklist" className="underline underline-offset-4 text-[15px]">
+                  Kitchen readiness checklist
+                </Link>
+              </li>
+            </ul>
+          </section>
+
           {/* Bottom CTAs */}
-          <section className="mt-14 pt-10 border-t border-black/10 flex flex-wrap gap-3">
+          <section className="mt-6 pt-10 border-t border-black/10 flex flex-wrap gap-3">
             <a
-              href={mychefUrl(area.slug + '-bottom')}
+              href={mychefUrl(
+                `${area.slug}-bottom`,
+                areaMychefPaths[area.slug] ?? MYCHEF_PATHS.privateChef,
+              )}
               target="_blank"
               rel="noopener external"
               className="inline-flex items-center font-body text-[12px] tracking-[0.08em] uppercase bg-black text-white px-5 py-3 hover:bg-black/85 transition-colors"

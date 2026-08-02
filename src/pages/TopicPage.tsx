@@ -4,7 +4,11 @@ import Footer from '@/sections/Footer';
 import EditorPick from '@/components/EditorPick';
 import { findHub, findTopic } from '@/content/topics';
 import { useSEO } from '@/lib/seo';
-import { MYCHEF_URL, topicRecommendations } from '@/content/recommendations';
+import {
+  topicRecommendations,
+  topicInternalLinks,
+  getRecommendationHref,
+} from '@/content/recommendations';
 
 export default function TopicPage() {
   const { hubSlug, topicSlug } = useParams<{ hubSlug: string; topicSlug: string }>();
@@ -161,12 +165,32 @@ export default function TopicPage() {
                 <EditorPick
                   headline={topicRecommendations[topic.slug].headline}
                   body={topicRecommendations[topic.slug].body}
-                  href={MYCHEF_URL}
+                  href={getRecommendationHref(topicRecommendations[topic.slug], topic.slug)}
                   cta={topicRecommendations[topic.slug].cta}
                 />
               )}
             </div>
           ))}
+
+          {topicInternalLinks[topic.slug] && topicInternalLinks[topic.slug].length > 0 && (
+            <section className="mt-10 pt-8 border-t border-black/10">
+              <h2 className="font-display text-[22px] md:text-[26px] leading-[1.15] text-black mb-4">
+                Related guides
+              </h2>
+              <ul className="grid sm:grid-cols-2 gap-2">
+                {topicInternalLinks[topic.slug].map((link) => (
+                  <li key={link.to}>
+                    <Link
+                      to={link.to}
+                      className="font-body text-[15px] text-black underline underline-offset-4 hover:no-underline"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           {topic.faq && topic.faq.length > 0 && (
             <section className="mt-16 pt-10 border-t border-black/10">

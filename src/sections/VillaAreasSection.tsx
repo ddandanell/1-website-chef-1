@@ -1,7 +1,10 @@
+import { Link } from 'react-router';
+
 export default function VillaAreasSection() {
   const areas = [
     {
       name: 'Canggu',
+      slug: 'canggu-villa-catering',
       tagline: 'Most catering options, best value',
       desc: 'Canggu has the highest concentration of villa catering services on the island. From budget BBQ catering to fine dining private chefs, you will find the widest selection here.',
       image: '/img-villa-canggu.jpg',
@@ -9,6 +12,7 @@ export default function VillaAreasSection() {
     },
     {
       name: 'Seminyak',
+      slug: 'seminyak-villa-catering',
       tagline: 'Sophisticated, perfect for celebrations',
       desc: 'Upscale villas with elegant entertaining spaces. Premium catering companies regularly service this area with fine dining menus designed for special occasions.',
       image: '/img-villa-seminyak.jpg',
@@ -16,13 +20,15 @@ export default function VillaAreasSection() {
     },
     {
       name: 'Uluwatu',
+      slug: 'uluwatu-villa-catering',
       tagline: 'Dramatic clifftop settings',
-      desc: 'Home to Bali&apos;s most dramatic villas perched on limestone cliffs. Catering here costs more due to travel distance, but the setting is unmatched anywhere on the island.',
+      desc: "Home to Bali's most dramatic villas perched on limestone cliffs. Catering here costs more due to travel distance, but the setting is unmatched anywhere on the island.",
       image: '/img-villa-uluwatu.jpg',
       alt: 'Clifftop infinity pool overlooking the Indian Ocean at sunset in Uluwatu',
     },
     {
       name: 'Ubud',
+      slug: 'ubud-villa-catering',
       tagline: 'Wellness-focused, organic cuisine',
       desc: 'Jungle retreats surrounded by rice terraces. The catering scene here specializes in plant-based, organic, and health-conscious menus for wellness-minded travelers.',
       image: '/img-villa-ubud.jpg',
@@ -43,23 +49,33 @@ export default function VillaAreasSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
           {areas.map((area) => (
             <div key={area.name} className="bg-linen">
-              <img
-                src={area.image}
-                alt={area.alt}
-                className="w-full h-auto object-cover"
-                style={{ aspectRatio: '4/3' }}
-                loading="lazy"
-              />
+              <Link to={`/areas/${area.slug}`} className="block overflow-hidden" aria-label={`${area.name} villa catering guide`}>
+                <img
+                  src={area.image}
+                  alt={area.alt}
+                  className="w-full h-auto object-cover transition-transform duration-500 hover:scale-[1.02]"
+                  style={{ aspectRatio: '4/3' }}
+                  loading="lazy"
+                />
+              </Link>
               <div className="p-5">
                 <h3 className="font-display text-[20px] md:text-[24px] leading-[1.2] text-black mb-1">
-                  {area.name}
+                  <Link to={`/areas/${area.slug}`} className="hover:underline underline-offset-4">
+                    {area.name}
+                  </Link>
                 </h3>
                 <p className="font-body text-[12px] tracking-[0.04em] uppercase text-black/45 mb-3">
                   {area.tagline}
                 </p>
-                <p className="font-body text-[14px] leading-[1.65] text-black/65">
+                <p className="font-body text-[14px] leading-[1.65] text-black/65 mb-3">
                   {area.desc}
                 </p>
+                <Link
+                  to={`/areas/${area.slug}`}
+                  className="font-body text-[11px] tracking-[0.08em] uppercase underline underline-offset-4"
+                >
+                  {area.name} catering guide →
+                </Link>
               </div>
             </div>
           ))}

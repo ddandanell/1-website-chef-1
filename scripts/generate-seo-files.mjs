@@ -58,12 +58,25 @@ const hubs = [
   },
 ];
 
-const areaSlugs = ['canggu-villa-catering'];
+const areaSlugs = [
+  'canggu-villa-catering',
+  'seminyak-villa-catering',
+  'ubud-villa-catering',
+  'uluwatu-villa-catering',
+];
+
+const resourceSlugs = [
+  'bali-villa-catering-price-index-2026',
+  'villa-wedding-fb-timeline',
+  'villa-kitchen-readiness-checklist',
+  'dietary-matrix-villa-catering',
+];
 
 const today = new Date().toISOString().slice(0, 10);
 const urls = [];
 urls.push({ loc: `${SITE_URL}/`, priority: '1.0', changefreq: 'weekly' });
 urls.push({ loc: `${SITE_URL}/about`, priority: '0.6', changefreq: 'monthly' });
+urls.push({ loc: `${SITE_URL}/resources`, priority: '0.8', changefreq: 'weekly' });
 for (const hub of hubs) {
   urls.push({ loc: `${SITE_URL}/${hub.slug}`, priority: '0.8', changefreq: 'weekly' });
   for (const topic of hub.topics) {
@@ -72,6 +85,9 @@ for (const hub of hubs) {
 }
 for (const slug of areaSlugs) {
   urls.push({ loc: `${SITE_URL}/areas/${slug}`, priority: '0.75', changefreq: 'monthly' });
+}
+for (const slug of resourceSlugs) {
+  urls.push({ loc: `${SITE_URL}/resources/${slug}`, priority: '0.85', changefreq: 'monthly' });
 }
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -120,6 +136,19 @@ ${hubs[2].topics.map((t) => `- [${t.replace(/-/g, ' ')}](${SITE_URL}/suppliers/$
 ## Guide
 
 ${hubs[3].topics.map((t) => `- [${t.replace(/-/g, ' ')}](${SITE_URL}/guide/${t})`).join('\n')}
+
+## Resources
+
+${resourceSlugs.map((t) => `- [${t.replace(/-/g, ' ')}](${SITE_URL}/resources/${t})`).join('\n')}
+
+## Areas
+
+${areaSlugs.map((t) => `- [${t.replace(/-/g, ' ')}](${SITE_URL}/areas/${t})`).join('\n')}
+
+## Booking (affiliated)
+
+- [myCHEF private chef Bali](https://mychef.id/private-chef-bali)
+- [myCHEF pricing](https://mychef.id/pricing)
 `;
 
 writeFileSync(resolve(publicDir, 'sitemap.xml'), sitemap);

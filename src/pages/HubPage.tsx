@@ -4,7 +4,8 @@ import Footer from '@/sections/Footer';
 import EditorPick from '@/components/EditorPick';
 import { findHub } from '@/content/topics';
 import { useSEO } from '@/lib/seo';
-import { MYCHEF_URL, hubRecommendations } from '@/content/recommendations';
+import { hubRecommendations, getRecommendationHref } from '@/content/recommendations';
+import { mychefUrl, MYCHEF_PATHS } from '@/lib/links';
 
 export default function HubPage() {
   const { hubSlug } = useParams<{ hubSlug: string }>();
@@ -130,7 +131,7 @@ export default function HubPage() {
               <EditorPick
                 headline={hubRecommendations[hub.slug].headline}
                 body={hubRecommendations[hub.slug].body}
-                href={MYCHEF_URL}
+                href={getRecommendationHref(hubRecommendations[hub.slug], hub.slug)}
                 cta={hubRecommendations[hub.slug].cta}
                 variant="bordered"
               />
@@ -151,7 +152,11 @@ export default function HubPage() {
                 </h3>
               </div>
               <a
-                href={MYCHEF_URL}
+                href={
+                  hubRecommendations[hub.slug]
+                    ? getRecommendationHref(hubRecommendations[hub.slug], `${hub.slug}-bottom`)
+                    : mychefUrl(`${hub.slug}-bottom`, MYCHEF_PATHS.privateChef)
+                }
                 target="_blank"
                 rel="noopener external"
                 className="font-body text-[12px] tracking-[0.06em] uppercase bg-black text-white px-5 py-3 hover:bg-black/80 transition-colors self-start md:self-auto inline-flex items-center"

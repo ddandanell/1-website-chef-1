@@ -8,6 +8,7 @@ const navLinks = [
   { label: 'SERVICES', to: '/services' },
   { label: 'SUPPLIERS', to: '/suppliers' },
   { label: 'GUIDE', to: '/guide' },
+  { label: 'RESOURCES', to: '/resources' },
 ];
 
 export default function Navigation() {
@@ -30,7 +31,7 @@ export default function Navigation() {
     navigate(to);
   };
 
-  const bookHref = mychefUrl('nav-cta');
+  const bookHref = mychefUrl('nav-cta', '/private-chef-bali');
   const waHref = whatsappUrl();
 
   return (

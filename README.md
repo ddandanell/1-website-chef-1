@@ -1,6 +1,14 @@
 # Villa Catering Bali
 
-Marketing site for `villa-catering-bali.online`, built with React, TypeScript, and Vite.
+Editorial guide for `villa-catering-bali.online` — private chefs, villa dinners, weddings and suppliers across Bali.
+
+Built with React, TypeScript, and Vite. Booking recommendations deep-link to the matching pages on [mychef.id](https://mychef.id) (private chef, pricing, fine dining, weddings, locations) with UTM attribution.
+
+## Live
+
+- Site: https://www.villa-catering-bali.online  
+- Resources: https://www.villa-catering-bali.online/resources  
+- GitHub: https://github.com/ddandanell/1-website-chef-1
 
 ## Local commands
 
@@ -8,7 +16,16 @@ Marketing site for `villa-catering-bali.online`, built with React, TypeScript, a
 npm install
 npm run build
 npm run preview
+npm run status:check
 ```
+
+## Team work status
+
+For internal execution visibility, this repo keeps a single source of truth in:
+
+- `WORK_STATUS.md`
+
+Update this file whenever priorities, blockers, or completion state changes.
 
 ## SEO automation loop
 

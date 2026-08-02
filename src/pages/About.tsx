@@ -67,7 +67,7 @@ export default function About() {
               myCHEF Indonesia has been running private chef and villa catering on Bali for over a decade. We have plated more than 10,000 villa dinners across Canggu, Seminyak, Uluwatu, Ubud and the rest of the island — from two-person anniversary dinners to hundred-and-fifty-guest weddings. The editorial content here is built on that operational experience: real pricing, real supply-chain detail, real logistics, written by the team that does the work.
             </p>
             <p className="font-body text-[17px] leading-[1.75] text-black/80 mb-5">
-              Disclosure: when we recommend a booking platform, we recommend <a href={mychefUrl('about')} target="_blank" rel="noopener external" className="text-black underline underline-offset-4 hover:no-underline">mychef.id</a> — the platform we operate. The reason is straightforward: we built it because the alternatives are slow, opaque, and full of operators we would not personally hire. Every chef on mychef.id is vetted by us. Every menu is reviewed. Every booking carries a real human guarantee.
+              Disclosure: when we recommend a booking platform, we recommend <a href={mychefUrl('about', '/private-chef-bali')} target="_blank" rel="noopener external" className="text-black underline underline-offset-4 hover:no-underline">private chef booking on mychef.id</a> — the platform we operate. The reason is straightforward: we built it because the alternatives are slow, opaque, and full of operators we would not personally hire. Every chef on mychef.id is vetted by us. Every menu is reviewed. Every booking carries a real human guarantee.
             </p>
           </section>
 
@@ -108,7 +108,7 @@ export default function About() {
             </p>
             <div className="flex flex-wrap gap-3 mt-6">
               <a
-                href={mychefUrl('about-cta')}
+                href={mychefUrl('about-cta', '/private-chef-bali')}
                 target="_blank"
                 rel="noopener external"
                 className="inline-flex items-center font-body text-[12px] tracking-[0.08em] uppercase bg-black text-white px-5 py-3 hover:bg-black/85 transition-colors"

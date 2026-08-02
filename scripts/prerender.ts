@@ -10,11 +10,15 @@ import { fileURLToPath } from 'node:url';
 import { hubs, type Hub, type Topic } from '../src/content/topics';
 import { homeFaqCategories } from '../src/content/homeFaq';
 import {
-  MYCHEF_URL,
   topicRecommendations,
   hubRecommendations,
+  getRecommendationHref,
+  topicInternalLinks,
+  areaMychefPaths,
 } from '../src/content/recommendations';
 import { areas, type Area } from '../src/content/areas';
+import { resources, type Resource } from '../src/content/resources';
+import { MYCHEF_PATHS, mychefUrl } from '../src/lib/links';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
@@ -151,13 +155,13 @@ function renderHomeBody(): string {
   `;
 }
 
-function renderEditorPick(headline: string, body: string, cta: string): string {
+function renderEditorPick(headline: string, body: string, cta: string, href: string): string {
   return `
     <aside aria-label="Editor's pick">
       <p>EDITOR'S PICK</p>
       <p><strong>${escapeHtml(headline)}</strong></p>
       <p>${escapeHtml(body)}</p>
-      <p><a href="${MYCHEF_URL}" rel="noopener external">${escapeHtml(cta)} →</a></p>
+      <p><a href="${escapeHtml(href)}" rel="noopener external">${escapeHtml(cta)} →</a></p>
     </aside>
   `;
 }
@@ -187,7 +191,16 @@ function renderHubBody(hub: Hub): string {
         )
         .join('\n      ')}
     </section>
-    ${rec ? renderEditorPick(rec.headline, rec.body, rec.cta) : ''}
+    ${
+      rec
+        ? renderEditorPick(
+            rec.headline,
+            rec.body,
+            rec.cta,
+            getRecommendationHref(rec, hub.slug),
+          )
+        : ''
+    }
   `;
 }
 
@@ -204,10 +217,32 @@ function renderTopicBody(hub: Hub, topic: Topic): string {
           <h2>${escapeHtml(s.heading)}</h2>
           ${s.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('\n          ')}
         </section>
-        ${idx === 1 && rec ? renderEditorPick(rec.headline, rec.body, rec.cta) : ''}
+        ${
+          idx === 1 && rec
+            ? renderEditorPick(
+                rec.headline,
+                rec.body,
+                rec.cta,
+                getRecommendationHref(rec, topic.slug),
+              )
+            : ''
+        }
       `
     )
     .join('\n      ');
+
+  const related = topicInternalLinks[topic.slug];
+  const relatedHtml =
+    related && related.length > 0
+      ? `
+        <section>
+          <h2>Related guides</h2>
+          <ul>
+            ${related.map((l) => `<li><a href="${escapeHtml(l.to)}">${escapeHtml(l.label)}</a></li>`).join('\n            ')}
+          </ul>
+        </section>
+      `
+      : '';
 
   const faq =
     topic.faq && topic.faq.length > 0
@@ -232,7 +267,70 @@ function renderTopicBody(hub: Hub, topic: Topic): string {
     ${imageTag}
     <article>
       ${sections}
+      ${relatedHtml}
       ${faq}
+    </article>
+  `;
+}
+
+function renderResourceBody(resource: Resource): string {
+  const rec = topicRecommendations[resource.slug];
+  const sections = resource.sections
+    .map((s, idx) => {
+      const list = s.list
+        ? `<ul>${s.list.map((i) => `<li>${escapeHtml(i)}</li>`).join('')}</ul>`
+        : '';
+      const table = s.table
+        ? `<table><thead><tr>${s.table.headers
+            .map((h) => `<th>${escapeHtml(h)}</th>`)
+            .join('')}</tr></thead><tbody>${s.table.rows
+            .map((row) => `<tr>${row.map((c) => `<td>${escapeHtml(c)}</td>`).join('')}</tr>`)
+            .join('')}</tbody></table>`
+        : '';
+      return `
+        <section>
+          <h2>${escapeHtml(s.heading)}</h2>
+          ${s.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('\n          ')}
+          ${list}
+          ${table}
+        </section>
+        ${
+          idx === 1 && rec
+            ? renderEditorPick(
+                rec.headline,
+                rec.body,
+                rec.cta,
+                getRecommendationHref(rec, resource.slug),
+              )
+            : ''
+        }
+      `;
+    })
+    .join('\n');
+
+  const faq =
+    resource.faq && resource.faq.length > 0
+      ? `<section><h2>Frequently asked</h2>${resource.faq
+          .map((f) => `<div><p><strong>${escapeHtml(f.q)}</strong></p><p>${escapeHtml(f.a)}</p></div>`)
+          .join('')}</section>`
+      : '';
+
+  const related = `<section><h2>Related on this guide</h2><ul>${resource.related
+    .map((r) => `<li><a href="${escapeHtml(r.to)}">${escapeHtml(r.label)}</a></li>`)
+    .join('')}</ul></section>`;
+
+  return `
+    <nav aria-label="breadcrumb">
+      <a href="/">Home</a> / <a href="/resources">Resources</a> / <span>${escapeHtml(resource.title)}</span>
+    </nav>
+    <header>
+      <h1>${escapeHtml(resource.title)}</h1>
+      <p>${escapeHtml(resource.intro)}</p>
+    </header>
+    <article>
+      ${sections}
+      ${faq}
+      ${related}
     </article>
   `;
 }
@@ -447,9 +545,13 @@ function renderAreaBody(area: Area): string {
         ${
           idx === 1
             ? renderEditorPick(
-                `mychef.id is where ${area.name} villa caterers actually take bookings`,
-                `The forty-plus operators serving ${area.name} are scattered across personal WhatsApp lines and old websites. mychef.id consolidates the vetted ones onto a single platform with unified pricing and real-time availability.`,
-                `Browse ${area.name} chefs`
+                `Private chef service in ${area.name} — transparent rates, local logistics`,
+                `Operators serving ${area.name} are scattered across personal WhatsApp lines. For a vetted team with published pricing and ${area.name} coverage, start on mychef.id.`,
+                `Private chef ${area.name}`,
+                mychefUrl(
+                  area.slug,
+                  areaMychefPaths[area.slug] ?? MYCHEF_PATHS.privateChef,
+                ),
               )
             : ''
         }
@@ -541,4 +643,73 @@ for (const area of areas) {
   );
 }
 
-console.log(`prerender: ${21 + 1 + areas.length} pages written with full body content`);
+// Resources hub + resource articles
+{
+  const canonical = `${SITE_URL}/resources`;
+  writePage(
+    resolve(distDir, 'resources', 'index.html'),
+    buildPage({
+      title: 'Bali Villa Catering Resources | Price Index, Timelines & Checklists',
+      description:
+        'Free research tools for Bali villa catering: 2026 price index, wedding F&B timeline, kitchen readiness checklist and dietary matrix.',
+      canonical,
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: 'Bali Villa Catering Resources',
+        url: canonical,
+        hasPart: resources.map((r) => ({
+          '@type': 'Article',
+          name: r.title,
+          url: `${SITE_URL}/resources/${r.slug}`,
+        })),
+      },
+      bodyHtml: `
+        <header>
+          <h1>Resources hosts, planners and guests actually reuse</h1>
+          <p>Price bands, day-of timelines, kitchen checklists and dietary matrices.</p>
+        </header>
+        <section>
+          <ul>
+            ${resources
+              .map(
+                (r) =>
+                  `<li><a href="/resources/${r.slug}"><strong>${escapeHtml(r.title)}</strong> — ${escapeHtml(r.intro)}</a></li>`,
+              )
+              .join('\n            ')}
+          </ul>
+        </section>
+      `,
+    }),
+  );
+}
+
+for (const resource of resources) {
+  const canonical = `${SITE_URL}/resources/${resource.slug}`;
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: resource.title,
+      description: resource.metaDescription,
+      mainEntityOfPage: canonical,
+      inLanguage: 'en',
+      keywords: resource.primaryKeyword,
+      publisher: { '@context': 'https://schema.org', ...ORG_LD },
+    },
+  ];
+  writePage(
+    resolve(distDir, 'resources', resource.slug, 'index.html'),
+    buildPage({
+      title: resource.metaTitle,
+      description: resource.metaDescription,
+      canonical,
+      jsonLd,
+      bodyHtml: renderResourceBody(resource),
+    }),
+  );
+}
+
+console.log(
+  `prerender: hubs+topics+home+about areas=${areas.length} resources=${resources.length} pages written with full body content`,
+);

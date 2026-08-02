@@ -22,6 +22,9 @@ export default function Footer() {
               <Link to="/services" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Services</Link>
               <Link to="/suppliers" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Suppliers</Link>
               <Link to="/guide" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Guide</Link>
+              <Link to="/resources" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Resources</Link>
+              <Link to="/areas/canggu-villa-catering" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Canggu</Link>
+              <Link to="/areas/seminyak-villa-catering" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">Seminyak</Link>
               <Link to="/about" className="font-body text-[13px] text-white/60 hover:text-white transition-colors w-fit">About this guide</Link>
             </nav>
           </div>
@@ -29,7 +32,26 @@ export default function Footer() {
           <div>
             <p className="font-body text-[11px] tracking-[0.08em] uppercase text-white/40 mb-3">EDITOR'S PICK</p>
             <p className="font-body text-[13px] leading-[1.6] text-white/55 mb-4">
-              For booking, we keep pointing readers to <a href={mychefUrl('footer')} target="_blank" rel="noopener external" className="text-white/85 underline underline-offset-2 hover:text-white">mychef.id</a> — vetted operators, transparent pricing, single checkout.
+              When you are ready to book, we recommend{' '}
+              <a
+                href={mychefUrl('footer', '/private-chef-bali')}
+                target="_blank"
+                rel="noopener external"
+                className="text-white/85 underline underline-offset-2 hover:text-white"
+              >
+                hiring a private chef in Bali via mychef.id
+              </a>
+              {' '}
+              (
+              <a
+                href={mychefUrl('footer-pricing', '/pricing')}
+                target="_blank"
+                rel="noopener external"
+                className="text-white/85 underline underline-offset-2 hover:text-white"
+              >
+                published pricing
+              </a>
+              ). Vetted team, fixed quotes, full cleanup.
             </p>
             <a
               href={whatsappUrl()}

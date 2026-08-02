@@ -1,3 +1,6 @@
+import { Link } from 'react-router';
+import { mychefUrl, MYCHEF_PATHS } from '@/lib/links';
+
 export default function CTASection() {
   return (
     <section className="bg-white py-16 md:py-20">
@@ -27,16 +30,50 @@ export default function CTASection() {
 
           <div className="font-body text-[14px] md:text-[15px] leading-[1.7] text-black/70 space-y-3">
             <p>
-              Finding the right villa catering service in Bali starts with knowing what you need. How many guests? What cuisine? What is your budget? What kind of atmosphere do you want? Once you have answers to these basics, narrowing down options becomes much easier.
+              Finding the right villa catering service in Bali starts with knowing what you need. How many guests? What cuisine? What is your budget? What kind of atmosphere do you want? Once you have answers to these basics, narrowing down options becomes much easier. Calibrate spend with our{' '}
+              <Link to="/resources/bali-villa-catering-price-index-2026" className="text-black underline underline-offset-4 hover:no-underline">
+                2026 price index
+              </Link>{' '}
+              and{' '}
+              <Link to="/guide/budget-guide-catering-bali-villa" className="text-black underline underline-offset-4 hover:no-underline">
+                budget guide
+              </Link>
+              .
             </p>
             <p>
-              We recommend contacting at least two or three catering companies for quotes and availability. This gives you a point of comparison and helps you gauge responsiveness and professionalism before committing. The best Bali catering services respond quickly, ask detailed questions about your event, and provide transparent proposals with no hidden costs.
+              We recommend contacting at least two or three catering companies for quotes and availability. This gives you a point of comparison and helps you gauge responsiveness and professionalism before committing. The best Bali catering services respond quickly, ask detailed questions about your event, and provide transparent proposals with no hidden costs. Walk the{' '}
+              <Link to="/guide/how-to-book-catering-bali-villa" className="text-black underline underline-offset-4 hover:no-underline">
+                booking checklist
+              </Link>{' '}
+              and{' '}
+              <Link to="/resources/villa-kitchen-readiness-checklist" className="text-black underline underline-offset-4 hover:no-underline">
+                kitchen readiness list
+              </Link>{' '}
+              first.
             </p>
             <p>
               If your villa is managed by a professional company, ask them for recommendations first. Villa managers work with catering teams regularly and can direct you to reliable, vetted options. This is especially helpful for first-time Bali visitors who are not yet familiar with the local service landscape.
             </p>
             <p>
-              For most travellers, the cleanest starting point is <a href="https://mychef.id/" target="_blank" rel="noopener external" className="text-black underline underline-offset-4 hover:no-underline">mychef.id</a> — it aggregates vetted private chefs across Bali with transparent per-person pricing, real-time availability and a single secure checkout. It is what we keep recommending to readers who want to skip the comparison-shopping email loop.
+              For most travellers, the cleanest starting point is{' '}
+              <a
+                href={mychefUrl('home-cta', MYCHEF_PATHS.privateChef)}
+                target="_blank"
+                rel="noopener external"
+                className="text-black underline underline-offset-4 hover:no-underline"
+              >
+                hire a private chef in Bali on mychef.id
+              </a>{' '}
+              — transparent per-person pricing, fixed quotes and a team that shops, cooks, serves and cleans. Compare{' '}
+              <a
+                href={mychefUrl('home-cta-pricing', MYCHEF_PATHS.pricing)}
+                target="_blank"
+                rel="noopener external"
+                className="text-black underline underline-offset-4 hover:no-underline"
+              >
+                published price tables
+              </a>{' '}
+              before you commit.
             </p>
           </div>
         </div>
